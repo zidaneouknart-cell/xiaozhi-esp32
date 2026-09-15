@@ -1,4 +1,4 @@
-name: Build Waveshare Firmware
+name: Build Custom Waveshare
 
 on:
   workflow_dispatch:
@@ -8,24 +8,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: espressif/idf:v5.4
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - name: Build Firmware
-        shell: bash
+      - name: Build with Official Docker
         run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          . /opt/esp/idf/export.sh
-          idf.py set-target esp32s3
-          idf.py -D BOARD_TYPE=bread-compact-wifi-lcd build
+          docker run --rm -v "$PWD":/workspace -w /workspace espressif/idf:v5.3.2 bash -c "
+            git config --global --add safe.directory /workspace &&
+            rm -rf build dependencies.lock managed_components &&
+            idf.py set-target esp32s3 &&
+            idf.py -D BOARD_TYPE=bread-compact-wifi-lcd build
+          "
 
-      - name: Upload Artifact
+      - name: Upload Binaries
         uses: actions/upload-artifact@v4
         with:
-          name: waveshare-binaries
+          name: waveshare-custom-bin
           path: |
             build/bootloader/bootloader.bin
             build/partition_table/partition-table.bin
