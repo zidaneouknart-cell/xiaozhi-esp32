@@ -1,0 +1,45 @@
+#ifndef _BOARD_CONFIG_H_
+#define _BOARD_CONFIG_H_
+
+#include <driver/gpio.h>
+
+#define AUDIO_INPUT_SAMPLE_RATE  16000
+#define AUDIO_OUTPUT_SAMPLE_RATE 24000
+#define AUDIO_I2S_METHOD_SIMPLEX
+
+#ifdef AUDIO_I2S_METHOD_SIMPLEX
+#define AUDIO_I2S_MIC_GPIO_WS   GPIO_NUM_2
+#define AUDIO_I2S_MIC_GPIO_SCK  GPIO_NUM_7
+#define AUDIO_I2S_MIC_GPIO_DIN  GPIO_NUM_8
+#define AUDIO_I2S_SPK_GPIO_DOUT GPIO_NUM_9
+#define AUDIO_I2S_SPK_GPIO_BCLK GPIO_NUM_11
+#define AUDIO_I2S_SPK_GPIO_LRCK GPIO_NUM_10
+#endif
+
+#define BUILTIN_LED_GPIO        GPIO_NUM_NC
+#define BOOT_BUTTON_GPIO        GPIO_NUM_0
+#define TOUCH_BUTTON_GPIO       GPIO_NUM_NC
+#define VOLUME_UP_BUTTON_GPIO   GPIO_NUM_NC
+#define VOLUME_DOWN_BUTTON_GPIO GPIO_NUM_NC
+
+// Waveshare 1.47 LCD Pins (From Official Schematic)
+#define DISPLAY_BACKLIGHT_PIN   GPIO_NUM_46
+#define DISPLAY_MOSI_PIN        GPIO_NUM_39
+#define DISPLAY_CLK_PIN         GPIO_NUM_38
+#define DISPLAY_DC_PIN          GPIO_NUM_45
+#define DISPLAY_RST_PIN         GPIO_NUM_40
+#define DISPLAY_CS_PIN          GPIO_NUM_21
+
+// Waveshare 1.47 Touch Pins (From Schematic)
+#define TOUCH_I2C_SCL_PIN       GPIO_NUM_41
+#define TOUCH_I2C_SDA_PIN       GPIO_NUM_42
+#define TOUCH_RST_PIN           GPIO_NUM_47
+#define TOUCH_INT_PIN           GPIO_NUM_48
+
+#define DISPLAY_WIDTH           172
+#define DISPLAY_HEIGHT          320
+#define DISPLAY_MIRROR_X        false
+#define DISPLAY_MIRROR_Y        false
+#define DISPLAY_SWAP_XY         false
+
+#endif
