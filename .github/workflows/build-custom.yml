@@ -13,10 +13,15 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build Firmware
+      - name: Fix Manifest & Build
         shell: bash
         run: |
           . $IDF_PATH/export.sh
+          # تنظيف التبعية المسببة للخطأ في التحليل
+          git checkout main/idf_component.yml 2>/dev/null || true
+          sed -i '/^dependencies:/,$d' main/idf_component.yml 2>/dev/null || true
+          
+          # إعداد البوردة والبناء
           cp sdkconfig.defaults.esp32s3 sdkconfig
           echo "CONFIG_BOARD_BREAD_COMPACT_WIFI_LCD=y" >> sdkconfig
           idf.py set-target esp32s3
